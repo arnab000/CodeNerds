@@ -1,0 +1,25 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "CodeNerd",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Arnab Saha",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-formidable": "^1.2.0",
+    "fs": "0.0.1-security",
+    "g": "^2.0.1",
+    "http": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.3",
+    "nodemon": "^2.0.6",
+    "socket.io": "^3.0.4"
+  }
+}
