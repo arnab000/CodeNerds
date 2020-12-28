@@ -1,99 +1,80 @@
 <html>
-
 <head>
-    <title>CodeNerds</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="/public/bower_componants/bootstrap/dist/css/me.css">
+	<title>CodeNerd</title>
 
+	<link rel="stylesheet" href="/public/public/css/main.min.css">
+	<link rel="stylesheet" href="/public/public/css/style.css">
+	<link rel="stylesheet" href="/public/public/css/color.css">
+	<link rel="stylesheet" href="/public/public/css/responsive.css">
 
 </head>
-
 <body>
+	<div class="theme-layout">
+		<div class="container-fluid pdng0">
+			<div class="row merged">
+				<div class="offset-md-3 col-md-6">
+					<div class="login-reg-bg">
+						<div class="log-reg-area sign">
+							<h2 class="log-title">Login</h2>
 
+							<form onsubmit="return doLogin(this);">
 
-    <form id="myform1" onsubmit="return doLogin(this);">
-        
+								<div class="form-group">
+									<input type="email" required name="email" />
+									<label class="control-label">Email</label><i class="mtrl-select"></i>
+								</div>
 
-        <div class="form-group">
-            <label>
-                <p class="label-txt">ENTER YOUR EMAIL</p>
-                <input type="text" required name="email" class="input" />
-                <div class="line-box">
-                    <div class="line"></div>
-                </div>
-            </label>
-            <i class="mtrl-select"></i>
-        </div>
+								<div class="form-group">
+									<input type="password" required name="password" />
+									<label class="control-label">Password</label><i class="mtrl-select"></i>
+								</div>
 
+								<a href="/signup">Don't have an account ?</a>
+								<div class="submit-btns">
+									<button class="mtr-btn login" name="submit" type="submit"><span>Login</span></button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-        <div class="form-group">
-            <label>
-                <p class="label-txt">ENTER YOUR PASSWORD</p>
-                <input type="password" required name="password" class="input" />
-                <div class="line-box">
-                    <div class="line"></div>
-                </div>
-            </label>
-            <i class="mtrl-select"></i>
-        </div>
+	<script>
+		function doLogin(form) {
+			form.submit.setAttribute("disabled", "disabled");
+			form.submit.innerHTML = "<span>Loading...</span>";
 
-        <a href="/signup">Don't have an account</a>
-        <div class="submit-btns">
-            <button class="mtr-btn signup" name="submit" type="submit">
-                <span>Log in</span>
-            </button>
-    </form>
-<script>
-    $(document).ready(function(){
+			var ajax = new XMLHttpRequest();
+			ajax.open("POST", "/login", true);
 
-        $('.input').focus(function(){
-          $(this).parent().find(".label-txt").addClass('label-active');
-        });
-      
-        $(".input").focusout(function(){
-          if ($(this).val() == '') {
-            $(this).parent().find(".label-txt").removeClass('label-active');
-          };
-        });
-      
-      });
-    </script>
-    <script>
-        function doLogin(form) {
+			ajax.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					form.submit.removeAttribute("disabled");
+					form.submit.innerHTML = "<span>Login</span>";
 
-            form.submit.setAttribute("disabled", "disabled");
-            form.submit.innerHTML = "<span> Loading...</span>";
-            var ajax = new XMLHttpRequest();
-            ajax.open("POST", "/login", true);
-            ajax.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    form.submit.removeAttribute("disabled");
-                    form.submit.innerHTML = "<span> Log In</span>";
-                    var response = JSON.parse(this.responseText);
-                    alert(response.message)
-                    if (response.status == "success") {
-                        var accessToken=response.accessToken;
-                        localStorage.setItem("accessToken",accessToken);
-                        if(response.profileImage=="")
-                        {
-                            window.location.href= "/updateProfle";
-                        }
-                        else
-                         window.location.href = "/";
-                    }
-                    else
-                    {
-                        alert(response.message);
-                    }
-                }
-            }
-            ajax.send(new FormData(form));
-            document.getElementById("myform1").reset()
-            return false;
-        }
-    </script>
+					var response = JSON.parse(this.responseText);
+
+					if (response.status == "success") {
+						var accessToken = response.accessToken;
+						localStorage.setItem("accessToken", accessToken);
+						if (response.profileImage == "") {
+							window.location.href = "/updateProfile";
+						} else {
+							window.location.href = "/";
+						}
+					} else {
+						alert(response.message);
+					}
+				}
+			};
+
+			ajax.send(new FormData(form));
+			return false;
+		}
+	</script>
+
 </body>
 
 </html>
