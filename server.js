@@ -56,6 +56,7 @@ http.listen(3000, function () {
 				}]
 			}, function (error, user) {
 				if (user == null) {
+                    
 					bcrypt.hash(password, 10, function (error, hash) {
 						database.collection("users").insertOne({
 							"name": name,
@@ -117,6 +118,7 @@ http.listen(3000, function () {
 									"accessToken": accessToken
 								}
 							}, function (error, data) {
+                               
 								result.json({
 									"status": "success",
 									"message": "Login successfully",
@@ -380,7 +382,8 @@ http.listen(3000, function () {
 						"createdAt": createdAt,
 						"likers": [],
 						"comments": [],
-						"shares": [],
+                        "shares": [],
+                        "sign":'!',
 						"user": {
 							"_id": user._id,
 							"name": user.name,
@@ -402,7 +405,8 @@ http.listen(3000, function () {
 									"createdAt": createdAt,
 									"likers": [],
 									"comments": [],
-									"shares": []
+                                    "shares": [],
+                                    "sign":'!'
 								}
 							}
 						}, function (error, data) {
@@ -429,17 +433,15 @@ http.listen(3000, function () {
 					});
 				} else {
 
-                    var ids = [];
                    
-                    ids.push(user._id);
-                    ids.push(ObjectId("5ff124230577ab3f81b7ed58"));
+                   
+                    //ids.push(user._id);
+                   // ids.push(ObjectId("5ff124230577ab3f81b7ed58"));
                    
 
 					database.collection("posts")
 					.find({
-						"user._id": {
-							$in: ids
-						}
+						"sign":"!"
 					})
 					.sort({
 						"createdAt": -1
@@ -828,7 +830,8 @@ http.listen(3000, function () {
 									"createdAt": createdAt,
 									"likers": [],
 									"comments": [],
-									"shares": [],
+                                    "shares": [],
+                                    "sign":"!",
 									"user": {
 										"_id": user._id,
 										"name": user.name,
