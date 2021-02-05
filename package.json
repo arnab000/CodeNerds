@@ -20,6 +20,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.3",
     "nodemon": "^2.0.6",
-    "socket.io": "^3.0.4"
+    "socket.io": "^3.0.4",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "react-scripts": "3.1.2"
   }
 }
