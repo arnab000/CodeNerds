@@ -1,1 +1,1 @@
-/codenerd
+ result.render("groups");
