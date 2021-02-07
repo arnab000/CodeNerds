@@ -1,4 +1,3 @@
-
 var express = require("express");
 var app = express();
 /*
@@ -18,6 +17,9 @@ serviceWorker.unregister();*/
 
 var formidable = require("express-formidable");
 app.use(formidable());
+
+const path = require("path");
+app.use(express.static(path.join(__dirname, "algoviz")));
 
 var mongodb = require("mongodb");
 var mongoClient = mongodb.MongoClient;
@@ -1157,5 +1159,3 @@ http.listen(3000, function () {
     app.post("/acceptFriendRequest", function (request, result) {});
   });
 });
-
-    
