@@ -19,8 +19,6 @@ var formidable = require("express-formidable");
 app.use(formidable());
 
 const path = require("path");
-app.use(express.static(path.join(__dirname, "algoviz")));
-
 var mongodb = require("mongodb");
 var mongoClient = mongodb.MongoClient;
 var ObjectId = mongodb.ObjectId;
@@ -34,6 +32,7 @@ var accessTokenSecret = "myAccessTokenSecret1234567890";
 
 app.use("/public", express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
+app.use( express.static(path.join(__dirname, "/algoviz")));
 
 var socketIO = require("socket.io")(http);
 var socketID = "";
@@ -415,7 +414,7 @@ http.listen(3000, function () {
       );
     });
 
-    app.get("/", function (request, result) {
+    app.get("/home", function (request, result) {
       result.render("index");
     });
 
@@ -754,7 +753,9 @@ http.listen(3000, function () {
                           user: {
                             _id: user._id,
                             name: user.name,
+                            username: user.username,
                             profileImage: user.profileImage,
+                            
                           },
                           comment: comment,
                           createdAt: createdAt,
@@ -804,6 +805,7 @@ http.listen(3000, function () {
                               user: {
                                 _id: user._id,
                                 name: user.name,
+                                username: user.username,
                                 profileImage: user.profileImage,
                               },
                               comment: comment,
@@ -885,6 +887,7 @@ http.listen(3000, function () {
                           user: {
                             _id: user._id,
                             name: user.name,
+                            username:user.username,
                             profileImage: user.profileImage,
                           },
                           reply: reply,
@@ -914,6 +917,7 @@ http.listen(3000, function () {
                               user: {
                                 _id: user._id,
                                 name: user.name,
+                                username: user.username,
                                 profileImage: user.profileImage,
                               },
                               reply: reply,
@@ -1084,6 +1088,7 @@ http.listen(3000, function () {
 
     app.get("/groups", function (request, result) {
       result.render("groups");
+      //app.use( express.static(path.join(__dirname, "/algoviz")));
     });
 
     app.get("/notifications", function (request, result) {
